@@ -1,7 +1,77 @@
 (ns leiningen.launch4j
+  (:require [clojure.data.xml :as xml])
   (:import net.sf.launch4j.Log
            net.sf.launch4j.Builder
            net.sf.launch4j.config.ConfigPersister))
+
+(def basic-form
+  [:launch4jConfig {} []])
+
+(def top-level-elements
+  [
+   [:headerType {} ""]
+   [:outfile {} ""]
+   [:jar {} ""]
+   [:dontWrapJar {} ""]
+   [:errTitle {} ""]
+   [:downloadUrl {} ""]
+   [:supportUrl {} ""]
+   [:cmdLine {} ""]
+   [:chdir {} ""]
+   [:priority {} ""]
+   [:customProcName {} ""]
+   [:stayAlive {} ""]
+   [:icon {} ""]
+   [:classpath {} [
+                   [:mainClass {} []]
+                   [:cp {} []]
+                   ]]
+   [:singleInstance {} [
+                        [:mutexName {} []]
+                        [:windowTitle {} []]
+                        ]]
+   [:jre {} [
+             [:path {} []]
+             [:minVersion {} []]
+             [:maxVersion {} []]
+             [:jdkPreference {} []]
+             [:initialHeapSize {} []]
+             [:initialHeapPercent {} []]
+             [:maxHeapSize {} []]
+             [:maxHeapPercent {} []]
+             [:opt {} []]
+             ]]
+   [:splash {} [
+                [:file {} []]
+                [:waitForWindow {} []]
+                [:timeout {} []]
+                [:timeoutErr {} []]
+                ]]
+   [:versionInfo {} [
+                     [:fileVersion {} []]
+                     [:txtFileVersion {} []]
+                     [:fileDescription {} []]
+                     [:copyright {} []]
+                     [:productVersion {} []]
+                     [:txtProductVersion {} []]
+                     [:productName {} []]
+                     [:companyName {} []]
+                     [:internalName {} []]
+                     [:originalFilename {} []]
+                     ]]
+   [:messages {} [
+                  [:startupErr {} []]
+                  [:bundledJreErr {} []]
+                  [:jreVersionErr {} []]
+                  [:launcherErr {} []]
+                  ]]
+
+   ])
+
+(def repeatable-elements
+  [:obj
+   :lib
+   :var])
 
 (defn read-config [config-file]
   (.. (ConfigPersister/getInstance)
