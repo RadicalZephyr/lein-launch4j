@@ -14,5 +14,5 @@
 (defn launch4j
   "I don't do a lot."
   [project & args]
-  (read-config (:launch4j-config project))
-  (build-project (:launch4j-install project)))
+  (read-config (:launch4j-config-file project))
+  (build-project (:launch4j-install-dir project)))
