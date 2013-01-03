@@ -1,4 +1,4 @@
-(defproject lein-launch4j "0.1.0-SNAPSHOT"
+(defproject lein-launch4j "0.1.1-SNAPSHOT"
   :description "wrap your project with launch4j"
   :url "https://github.com/ezephyr/lein-launch4j"
   :license {:name "Eclipse Public License"

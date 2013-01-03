@@ -11,8 +11,21 @@
   (.. (Builder. (Log/getConsoleLog) bin-dir)
       (build)))
 
+(defn validate-filename [file-name]
+  (when file-name
+    (let [f (clojure.java.io/file file-name)]
+      (if (.exists f)
+        (.getCanonicalFile f)
+        (do
+          (prn (str file-name " does not exist"))
+          ((System/exit 0)))))))
+
 (defn launch4j
   "I don't do a lot."
   [project & args]
-  (read-config (:launch4j-config-file project))
-  (build-project (:launch4j-install-dir project)))
+  (read-config
+   (validate-filename
+    (:launch4j-config-file project)))
+  (build-project
+   (validate-filename
+    (:launch4j-install-dir project))))
