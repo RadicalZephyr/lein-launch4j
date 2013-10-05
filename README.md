@@ -9,7 +9,7 @@ Install [launch4j][l4j-home] somewhere on your local machine.
 
 [l4j-home]: http://launch4j.sourceforge.net/
 
-Put `[lein-launch4j "0.1.0-SNAPSHOT"]` into the `:plugins` vector of
+Put `[lein-launch4j "0.1.0"]` into the `:plugins` vector of
 your `:user` profile.
 
 Then add `:launch4j-install-dir
