@@ -89,7 +89,7 @@
           ((System/exit 0)))))))
 
 (defn launch4j
-  "I don't do a lot."
+  "Wrap your leiningen project into a Windows .exe"
   [project & args]
   (read-config
    (validate-filename
