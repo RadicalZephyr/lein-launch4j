@@ -1,5 +1,6 @@
 (ns leiningen.launch4j
-  (:require [clojure.data.xml :as xml])
+  (:require [clojure.data.xml :as xml]
+            [clojure.java.io :as io])
   (:import net.sf.launch4j.Log
            net.sf.launch4j.Builder
            net.sf.launch4j.config.ConfigPersister))
@@ -89,11 +90,16 @@
           ((System/exit 0)))))))
 
 (defn launch4j
-  "Wrap your leiningen project into a Windows .exe"
+  "Wrap your leiningen project into a Windows .exe
+
+Add :main to your project.clj to specify the namespace that contains your
+-main function."
   [project & args]
-  (read-config
-   (validate-filename
-    (:launch4j-config-file project)))
-  (build-project
-   (validate-filename
-    (:launch4j-install-dir project))))
+  (if (and (:main project)
+           (:launch4j project)))
+  (let [launch4j-opts (:launch4j project)
+        target (io/file (:target-path project))
+        outfile (io/file target
+                         (or (get-in launch4j-opts [])
+                             (str (:name project) "-" (:version project) ".exe")))]
+    ))
