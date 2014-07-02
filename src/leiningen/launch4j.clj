@@ -95,11 +95,11 @@
 Add :main to your project.clj to specify the namespace that contains your
 -main function."
   [project & args]
-  (if (and (:main project)
-           (:launch4j project)))
-  (let [launch4j-opts (:launch4j project)
-        target (io/file (:target-path project))
-        outfile (io/file target
-                         (or (get-in launch4j-opts [])
-                             (str (:name project) "-" (:version project) ".exe")))]
-    ))
+  (when (and (:main project)
+             (:launch4j project))
+    (let [launch4j-opts (:launch4j project)
+          target (io/file (:target-path project))
+          outfile (io/file target
+                           (or (get-in launch4j-opts [])
+                               (str (:name project) "-" (:version project) ".exe")))]
+      )))
