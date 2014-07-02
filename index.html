@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Lein-launch4j : Lein plugin to run launch4j as part of your clojure build" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Lein-launch4j</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/RadicalZephyr/lein-launch4j">View on GitHub</a>
+
+          <h1 id="project_title">Lein-launch4j</h1>
+          <h2 id="project_tagline">Lein plugin to run launch4j as part of your clojure build</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/RadicalZephyr/lein-launch4j/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/RadicalZephyr/lein-launch4j/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="lein-launch4j" class="anchor" href="#lein-launch4j"><span class="octicon octicon-link"></span></a>lein-launch4j</h1>
+
+<p>A Leiningen plugin to use <a href="http://launch4j.sourceforge.net/">launch4j</a> to generate an .exe wrapper for
+your Clojure project.</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Install <a href="http://launch4j.sourceforge.net/">launch4j</a> somewhere on your local machine.</p>
+
+<p>Put <code>[lein-launch4j "0.1.0"]</code> into the <code>:plugins</code> vector of
+your <code>:user</code> profile.</p>
+
+<p>Then add <code>:launch4j-install-dir
+"/path/to/launch4j"</code> to your <code>:user</code> profile.  It should end up
+looking something like this:</p>
+
+<pre><code>{:user
+ {:plugins [[lein-launch4j "0.1.0"]]
+  :launch4j-install-dir "/home/geoff/launch4j"}}
+</code></pre>
+
+<p>Now you need to create a <a href="http://launch4j.sourceforge.net/docs.html">config.xml</a> file for your project.
+Place it somewhere in your project, I happen to like the <code>resources</code>
+folder.  Then put <code>:launch4j-config-file "relative-path/to/config.xml"</code></p>
+
+<p>Now you can package your app with launch4j just by running:</p>
+
+<pre><code>$ lein launch4j
+</code></pre>
+
+<p>Leiningen 1.x is not currently supported.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Copyright © 2013 Geoff Shannon</p>
+
+<p>Distributed under the Eclipse Public License, the same as Clojure.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Lein-launch4j maintained by <a href="https://github.com/RadicalZephyr">RadicalZephyr</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
