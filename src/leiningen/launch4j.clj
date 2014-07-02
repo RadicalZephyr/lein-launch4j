@@ -89,6 +89,18 @@
           (prn (str file-name " does not exist"))
           ((System/exit 0)))))))
 
+(defn download-suffix
+  "Get the platform specific download suffix."
+  []
+  (let [os (System/getProperty "os.name")
+        version (System/getProperty "os.version")
+        arch (System/getProperty "os.arch")]
+    (cond
+     (and (= os "Mac OS X")
+          (neg? (compare version "10.8") )) "macosx"
+          (= os "Mac OS X") "macosx-10.8"
+          (= os "Linux" "linux")
+          (= os "Windows" "win32"))))
 (defn launch4j
   "Wrap your leiningen project into a Windows .exe
 
