@@ -1,9 +1,12 @@
 (ns leiningen.launch4j
   (:require [clojure.data.xml :as xml]
-            [clojure.java.io :as io])
+            [clojure.java.io :as io]
+            [leiningen.core.user :as user])
   (:import net.sf.launch4j.Log
            net.sf.launch4j.Builder
            net.sf.launch4j.config.ConfigPersister))
+
+(def base-url "http://www.zephyrizing.net/lein-launch4j/resources")
 
 (def basic-form
   [:launch4jConfig {}])
@@ -101,6 +104,18 @@
           (= os "Mac OS X") "macosx-10.8"
           (= os "Linux" "linux")
           (= os "Windows" "win32"))))
+
+(defn init-launch4j
+  "Make sure the needed binaries are downloaded."
+  []
+  (let [launch4j-home (io/file (user/leiningen-home) "launch4j")
+        zip-url (io/as-url (io/file base-url
+                                    (str "launch4j-3.4-"
+                                         (download-suffix)
+                                         ".zip")))]
+
+    ))
+
 (defn launch4j
   "Wrap your leiningen project into a Windows .exe
 
