@@ -80,7 +80,7 @@
          :jdkPreference "preferJre"}
    })
 
-(defn map->xml [options]
+(defn map->xml-sexp [options]
   (map (fn [[key value]] (if (map? value)
                            (vec (concat [key {}]
                                         (map->xml value)))
@@ -88,8 +88,13 @@
        (seq options)))
 
 (defn emit-empty-config []
-  (println
-   (xml/emit-str
-    (xml/sexp-as-element (vec
-                          (concat basic-form
-                                  top-level-elements))))))
+  (xml/emit-str
+   (xml/sexp-as-element (vec
+                         (concat basic-form
+                                 top-level-elements)))))
+
+(defn emit-config [options]
+  (xml/emit-str
+   (xml/sexp-as-element (vec
+                         (concat basic-form
+                                 (map->xml-sexp options))))))
