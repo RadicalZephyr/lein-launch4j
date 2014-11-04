@@ -62,22 +62,59 @@
    :var])
 
 (def default-options
-  {:dontWrapJar false
-   :customProcName true
-   :stayAlive      false
+  {
+   :jar ""
+   :outfile ""
    :headerType "gui"
+   :icon "icon.ico"
+   :errTitle ""
+   :manifest ""
    :cmdLine ""
-   :chdir   ""
    :priority "normal"
-   :downloadUrl "http://java.com/download"
    :supportUrl ""
-   :manifest   ""
-   :icon       "icon.ico"
-
-   :jre {:path ""
+   :dontWrapJar false
+   :customProcName true
+   :stayAlive false
+   :downloadUrl "http://java.com/download"
+   :chdir ""
+   :classpath {
+               :cp ""
+               :mainClass ""
+               }
+   :singleInstance {
+                    :windowTitle ""
+                    :mutexName ""
+                    }
+   :splash {
+            :timeoutErr ""
+            :timeout ""
+            :waitForWindow ""
+            :file ""
+            }
+   :messages {
+              :launcherErr ""
+              :jreVersionErr ""
+              :bundledJreErr ""
+              :startupErr ""
+              }
+   :versionInfo {
+                 :internalName ""
+                 :copyright ""
+                 :productName ""
+                 :fileVersion ""
+                 :txtFileVersion ""
+                 :productVersion ""
+                 :companyName ""
+                 :txtProductVersion ""
+                 :fileDescription ""
+                 :originalFilename ""
+                 }
+   :jre {
+         :path ""
+         :jdkPreference "preferJre"
          :minVersion "1.6.0_45"
          :maxVersion ""
-         :jdkPreference "preferJre"}
+         }
    })
 
 (defn both [pred a b]
@@ -94,7 +131,7 @@
 (defn xml-sexp->map [sexp]
   (if (vector? sexp)
     (let [[key dict & children] sexp]
-     {key (reduce merge (map xml-sexp->map children))})
+      {key (reduce merge (map xml-sexp->map children))})
     sexp))
 
 (defn map->xml-sexp [options]
