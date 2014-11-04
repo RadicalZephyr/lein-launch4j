@@ -30,8 +30,7 @@
   "Get the platform specific download suffix."
   []
   (let [os       (System/getProperty "os.name")
-        version  (System/getProperty "os.version")
-        arch     (System/getProperty "os.arch")]
+        version  (System/getProperty "os.version")]
     (cond
      (and (= os "Mac OS X")
           (neg? (compare version "10.8"))) "macosx"
