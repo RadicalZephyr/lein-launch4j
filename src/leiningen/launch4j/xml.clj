@@ -91,6 +91,12 @@
                          :else b))]
     (merge-with rec-merge a b)))
 
+(defn xml-sexp->map [sexp]
+  (if (vector? sexp)
+    (let [[key dict & children] sexp]
+     {key (reduce merge (map xml-sexp->map children))})
+    sexp))
+
 (defn map->xml-sexp [options]
   (map (fn [[key value]] (if (map? value)
                            (vec (concat [key {}]
