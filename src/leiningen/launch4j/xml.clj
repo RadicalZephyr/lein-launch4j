@@ -61,6 +61,32 @@
    :lib
    :var])
 
+(def default-options
+  {:dontWrapJar false
+   :customProcName true
+   :stayAlive      false
+   :headerType "gui"
+   :cmdLine ""
+   :chdir   ""
+   :priority "normal"
+   :downloadUrl "http://java.com/download"
+   :supportUrl ""
+   :manifest   ""
+   :icon       "icon.ico"
+
+   :jre {:path ""
+         :minVersion "1.6.0_45"
+         :maxVersion ""
+         :jdkPreference "preferJre"}
+   })
+
+(defn map->xml [options]
+  (map (fn [[key value]] (if (map? value)
+                           (vec (concat [key {}]
+                                        (map->xml value)))
+                           [key {} (str value)]))
+       (seq options)))
+
 (defn emit-empty-config []
   (println
    (xml/emit-str
