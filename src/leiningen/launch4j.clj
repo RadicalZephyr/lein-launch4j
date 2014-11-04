@@ -63,7 +63,13 @@ Add :main to your project.clj to specify the namespace that contains your
 
     (let [launch4j-opts (:launch4j project)
           target (io/file (:target-path project))
+          jarfile ""
           outfile (io/file target
-                           (or (:exe-name launch4j-opts)
-                               (str (:name project) "-" (:version project) ".exe")))]
+                           (or (:exe-name project)
+                               (str (:name project)
+                                    "-"
+                                    (:version project) ".exe")))
+          options (merge {:jar     jarfile
+                          :outfile outfile}
+                         launch4j-opts)]
       )))
