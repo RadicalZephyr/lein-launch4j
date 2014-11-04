@@ -22,8 +22,6 @@
   (take-while #(not (nil? %))
               (repeatedly #(next-entry zip-stream))))
 
-;; This must be called before copy-file
-;; (.mkdirs (io/file (.getParent (io/file lein-home (entry-name ze)))))
 (defn copy-file [^ZipInputStream zip-stream filename]
   (with-open [^FileOutputStream out-file (file-out-stream filename)]
     (let [buff-size 4096
@@ -33,6 +31,15 @@
           (.write out-file buffer 0 len)
           (recur (.read zip-stream buffer)))))))
 
-(defn extract-stream [zip-stream]
-
-  )
+(defn extract-stream [zip-stream to-folder]
+  (let [extract-entry (fn [zip-entry]
+                        (when (not (is-dir? zip-entry))
+                          (let [to-file (io/file to-folder
+                                                 (entry-name zip-entry))
+                                parent-file (io/file (.getParent to-file))]
+                            (.mkdirs parent-file)
+                            (copy-file zip-stream to-file))))]
+    (->> zip-stream
+         entries
+         (map extract-entry)
+         dorun)))
