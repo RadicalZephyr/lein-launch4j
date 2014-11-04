@@ -80,6 +80,17 @@
          :jdkPreference "preferJre"}
    })
 
+(defn both [pred a b]
+  (and (pred a)
+       (pred b)))
+
+(defn rec-merge [a b]
+  (let [elt-merg (fn [a b]
+                   (cond (both map? a b) (rec-merge a b)
+                         (both vector? a b) (vec (concat a b))
+                         :else b))]
+    (merge-with rec-merge a b)))
+
 (defn map->xml-sexp [options]
   (map (fn [[key value]] (if (map? value)
                            (vec (concat [key {}]
