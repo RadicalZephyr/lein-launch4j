@@ -62,8 +62,7 @@ Add :main to your project.clj to specify the namespace that contains your
 
     ;; Make sure we have launch4j installed
     (if-let [launch4j-home (init-launch4j)]
-      (let [launch4j-opts (:launch4j project)
-            target (io/file (:target-path project))
+      (let [target  (io/file (:target-path project))
             jarfile ""
             outfile (io/file target
                              (or (:exe-name project)
@@ -72,5 +71,5 @@ Add :main to your project.clj to specify the namespace that contains your
                                       (:version project) ".exe")))
             options (merge {:jar     jarfile
                             :outfile outfile}
-                           launch4j-opts)]
+                           (:launch4j project))]
         ))))
