@@ -63,57 +63,76 @@
 
 (def default-options
   {
-   :jar ""
-   :outfile ""
-   :headerType "gui"
-   :icon "icon.ico"
-   :errTitle ""
-   :manifest ""
-   :cmdLine ""
-   :priority "normal"
-   :supportUrl ""
-   :dontWrapJar false
-   :customProcName true
-   :stayAlive false
+   ;; These are possible fields but they MUST be filled in, and they
+   ;; are inherently project specific.  Thus no default could make
+   ;; sense.  It's better to have launch4j fail because they are
+   ;; absent then proceed with nonsenical values.
+   ;; -----
+   ;; :jar      ""
+   ;; :outfile  ""
+
+
+   ;; These are possible fields that don't need to be present.  So
+   ;; don't add them so they won't appear if not specified by the
+   ;; user.
+   ;; -----
+   ;; :errTitle    ""
+   ;; :manifest    ""
+   ;; :cmdLine     ""
+   ;; :supportUrl  ""
+   ;; :chdir       ""
+   ;; :classpath {
+   ;;             :cp         ""
+   ;;             :mainClass  ""
+   ;;             }
+   ;; :singleInstance {
+   ;;                  :windowTitle  ""
+   ;;                  :mutexName    ""
+   ;;                  }
+   ;; :splash {
+   ;;          :timeoutErr     ""
+   ;;          :timeout        ""
+   ;;          :waitForWindow  ""
+   ;;          :file           ""
+   ;;          }
+   ;; :messages {
+   ;;            :launcherErr    ""
+   ;;            :jreVersionErr  ""
+   ;;            :bundledJreErr  ""
+   ;;            :startupErr     ""
+   ;;            }
+   ;; :versionInfo {
+   ;;               :internalName       ""
+   ;;               :copyright          ""
+   ;;               :productName        ""
+   ;;               :fileVersion        ""
+   ;;               :txtFileVersion     ""
+   ;;               :productVersion     ""
+   ;;               :companyName        ""
+   ;;               :txtProductVersion  ""
+   ;;               :fileDescription    ""
+   ;;               :originalFilename   ""
+   ;;               }
+
+
+   ;; These are the values that have sensible default values that many
+   ;; users won't want to specify.
+
+   :dontWrapJar     false
+   :customProcName  true
+   :stayAlive       false
+
+   :headerType  "gui"
+   :icon        "icon.ico"
+   :priority    "normal"
    :downloadUrl "http://java.com/download"
-   :chdir ""
-   :classpath {
-               :cp ""
-               :mainClass ""
-               }
-   :singleInstance {
-                    :windowTitle ""
-                    :mutexName ""
-                    }
-   :splash {
-            :timeoutErr ""
-            :timeout ""
-            :waitForWindow ""
-            :file ""
-            }
-   :messages {
-              :launcherErr ""
-              :jreVersionErr ""
-              :bundledJreErr ""
-              :startupErr ""
-              }
-   :versionInfo {
-                 :internalName ""
-                 :copyright ""
-                 :productName ""
-                 :fileVersion ""
-                 :txtFileVersion ""
-                 :productVersion ""
-                 :companyName ""
-                 :txtProductVersion ""
-                 :fileDescription ""
-                 :originalFilename ""
-                 }
+
    :jre {
-         :path ""
-         :jdkPreference "preferJre"
-         :minVersion "1.6.0_45"
-         :maxVersion ""
+         ;; :path           ""
+         ;; :maxVersion     ""
+
+         :minVersion     "1.6.0_45"
+         :jdkPreference  "preferJre"
          }
    })
 
