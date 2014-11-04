@@ -48,7 +48,8 @@
     (when (not (.exists (io/file lein-home "launch4j")))
      (with-open [zip-stream (zip/zip-stream
                              (io/input-stream zip-url))]
-       (zip/extract-stream zip-stream lein-home)))))
+       (zip/extract-stream zip-stream lein-home)))
+    (io/file lein-home "launch4j")))
 
 (defn launch4j
   "Wrap your leiningen project into a Windows .exe
@@ -58,18 +59,18 @@ Add :main to your project.clj to specify the namespace that contains your
   [project & args]
   (when (and (:main project)
              (:launch4j project))
-    ;; Make sure we have launch4j installed
-    (init-launch4j)
 
-    (let [launch4j-opts (:launch4j project)
-          target (io/file (:target-path project))
-          jarfile ""
-          outfile (io/file target
-                           (or (:exe-name project)
-                               (str (:name project)
-                                    "-"
-                                    (:version project) ".exe")))
-          options (merge {:jar     jarfile
-                          :outfile outfile}
-                         launch4j-opts)]
-      )))
+    ;; Make sure we have launch4j installed
+    (if-let [launch4j-home (init-launch4j)]
+      (let [launch4j-opts (:launch4j project)
+            target (io/file (:target-path project))
+            jarfile ""
+            outfile (io/file target
+                             (or (:exe-name project)
+                                 (str (:name project)
+                                      "-"
+                                      (:version project) ".exe")))
+            options (merge {:jar     jarfile
+                            :outfile outfile}
+                           launch4j-opts)]
+        ))))
