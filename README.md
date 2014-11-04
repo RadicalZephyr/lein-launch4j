@@ -21,6 +21,22 @@ Now you can package your app with launch4j just by running:
 
     $ lein launch4j
 
+## Valid `project.clj` Options
+
+I've tried to provide sensible defaults for all of the required
+`launch4j` options, and the default executable name is derived from
+the name and version of the project as `<name>-<version>.exe`.
+
+But there are many different ways that `launch4j` can be
+configured. Right now the only documentation in this project exists as
+comments on the `default-options` var in the `leiningen.launch4j.xml`
+namespace. The two that aren't documented there are the `:exe-name`
+option which goes in the root of your project definition. It is used
+to override the default file name for the final executable. The second
+is the `:launch4j` key, where you place the arbitrary options that are
+transformed into an XML configuration for launch4j. It should be a
+dictionary with keywords named for the XML tags. When a key has a map
+as it's value, these tags are nested inside the key tag.
 
 ## License
 
