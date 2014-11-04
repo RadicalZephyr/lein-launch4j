@@ -128,9 +128,12 @@ Add :main to your project.clj to specify the namespace that contains your
   [project & args]
   (when (and (:main project)
              (:launch4j project))
+    ;; Make sure we have launch4j installed
+    (init-launch4j)
+
     (let [launch4j-opts (:launch4j project)
           target (io/file (:target-path project))
           outfile (io/file target
-                           (or (get-in launch4j-opts [])
+                           (or (:exe-name launch4j-opts)
                                (str (:name project) "-" (:version project) ".exe")))]
       )))
