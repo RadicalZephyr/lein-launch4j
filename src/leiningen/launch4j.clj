@@ -1,5 +1,6 @@
 (ns leiningen.launch4j
-  (:require [clojure.data.xml :as xml]
+  (:require [leiningen.launch4j.zip :as zip]
+            [clojure.data.xml :as xml]
             [clojure.java.io :as io]
             [leiningen.core.user :as user])
   (:import net.sf.launch4j.Log
@@ -105,16 +106,19 @@
           (= os "Linux")                   "linux"
           (= os "Windows")                 "win32")))
 
+
+
 (defn init-launch4j
   "Make sure the needed binaries are downloaded."
   []
-  (let [launch4j-home (io/file (user/leiningen-home) "launch4j")
-        zip-url (io/as-url (io/file base-url
-                                    (str "launch4j-3.4-"
-                                         (download-suffix)
-                                         ".zip")))]
-
-    ))
+  (let [lein-home (io/file (user/leiningen-home))
+        zip-url (io/as-url (str base-url "/launch4j-3.4-"
+                                (download-suffix)
+                                ".zip"))]
+    (when (not (.exists (io/file lein-home "launch4j")))
+     (with-open [zip-stream (zip/zip-stream
+                             (io/input-stream zip-url))]
+       (zip/extract-stream zip-stream lein-home)))))
 
 (defn launch4j
   "Wrap your leiningen project into a Windows .exe
