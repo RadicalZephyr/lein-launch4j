@@ -64,6 +64,7 @@ Add :main to your project.clj to specify the namespace that contains your
     (if-let [launch4j-home (init-launch4j)]
       (let [target  (io/file (:target-path project))
             jarfile ""
+            xmlfile (io/file target "config.xml")
             outfile (io/file target
                              (or (:exe-name project)
                                  (str (:name project)
@@ -72,4 +73,6 @@ Add :main to your project.clj to specify the namespace that contains your
             options (merge {:jar     jarfile
                             :outfile outfile}
                            (:launch4j project))]
+        (with-open [xml-out (io/writer xmlfile)]
+          (xml/emit-config options xml-out))
         ))))
