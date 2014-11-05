@@ -19,7 +19,7 @@
 
 (defn validate-filename [file-name]
   (when file-name
-    (let [f (clojure.java.io/file file-name)]
+    (let [f (io/file file-name)]
       (if (.exists f)
         (.getCanonicalFile f)
         (do
@@ -73,6 +73,9 @@ Add :main to your project.clj to specify the namespace that contains your
             options (merge {:jar     jarfile
                             :outfile outfile}
                            (:launch4j project))]
-        (with-open [xml-out (io/writer xmlfile)]
-          (xml/emit-config options xml-out))
-        ))))
+        (with-open [xmlout (io/writer xmlfile)]
+          (xml/emit-config options xmlout))
+        (read-config
+         (validate-filename xmlfile))
+        (build-project
+         (validate-filename launch4j-home))))))
