@@ -5,6 +5,7 @@ your Clojure project.
 
 [l4j-home]: http://launch4j.sourceforge.net/
 
+[![Clojars Project](http://clojars.org/lein-launch4j/latest-version.svg)](http://clojars.org/lein-launch4j)
 
 ## Usage
 
