@@ -156,7 +156,7 @@
 (defn map->xml-sexp [options]
   (map (fn [[key value]] (if (map? value)
                            (vec (concat [key {}]
-                                        (map->xml value)))
+                                        (map->xml-sexp value)))
                            [key {} (str value)]))
        (seq options)))
 
