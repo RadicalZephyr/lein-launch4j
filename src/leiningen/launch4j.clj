@@ -57,8 +57,8 @@
 Add :main to your project.clj to specify the namespace that contains your
 -main function."
   [project & args]
-  (when (and (:main project)
-             (:launch4j project))
+  (when (and (:main      project)
+             (:launch4j  project))
 
     ;; Make sure we have launch4j installed
     (if-let [launch4j-home (init-launch4j)]
