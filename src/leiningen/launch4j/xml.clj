@@ -160,14 +160,15 @@
                            [key {} (str value)]))
        (seq options)))
 
-(defn emit-empty-config []
+(defn emit-sexp-with-basic-form-str [sexp]
   (xml/emit-str
-   (xml/sexp-as-element (vec
-                         (concat basic-form
-                                 top-level-elements)))))
+   (xml/sexp-as-element
+    (vec
+     (concat basic-form
+             sexp)))))
 
-(defn emit-config [options]
-  (xml/emit-str
-   (xml/sexp-as-element (vec
-                         (concat basic-form
-                                 (map->xml-sexp options))))))
+(defn emit-empty-config-str []
+  (emit-sexp-with-basic-form-str top-level-elements))
+
+(defn emit-config-str [options]
+  (emit-sexp-with-basic-form-str (map->xml-sexp options)))
