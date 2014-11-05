@@ -24,7 +24,7 @@
       (if (.exists f)
         (.getCanonicalFile f)
         (do
-          (main/warn (str file-name " does not exist"))
+          (main/warn (str "File '" file-name "' does not exist"))
           ((System/exit 0)))))))
 
 (defn download-suffix
@@ -47,16 +47,18 @@
                                 (download-suffix)
                                 ".zip"))]
     (when (not (.exists (io/file lein-home "launch4j")))
-     (with-open [zip-stream (zip/zip-stream
-                             (io/input-stream zip-url))]
-       (zip/extract-stream zip-stream lein-home)))
+      (main/info "launch4j not found, downloading and unpacking into
+      ~/.lein/launch4j")
+      (with-open [zip-stream (zip/zip-stream
+                              (io/input-stream zip-url))]
+        (zip/extract-stream zip-stream lein-home)))
     (io/file lein-home "launch4j")))
 
 (defn launch4j
   "Wrap your leiningen project into a Windows .exe
 
-Add :main to your project.clj to specify the namespace that contains your
--main function."
+  Add :main to your project.clj to specify the namespace that contains your
+  -main function."
   [project & args]
   (cond (:main project)
         ;; Make sure we have launch4j installed
