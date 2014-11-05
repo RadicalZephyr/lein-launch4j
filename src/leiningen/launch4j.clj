@@ -2,6 +2,7 @@
   (:require [leiningen.launch4j.zip :as zip]
             [leiningen.launch4j.xml :as xml]
             [clojure.java.io :as io]
+            [leiningen.core.main :as main]
             [leiningen.core.user :as user])
   (:import net.sf.launch4j.Log
            net.sf.launch4j.Builder
@@ -23,7 +24,7 @@
       (if (.exists f)
         (.getCanonicalFile f)
         (do
-          (prn (str file-name " does not exist"))
+          (main/warn (str file-name " does not exist"))
           ((System/exit 0)))))))
 
 (defn download-suffix
@@ -57,25 +58,26 @@
 Add :main to your project.clj to specify the namespace that contains your
 -main function."
   [project & args]
-  (when (and (:main      project)
-             (:launch4j  project))
-
-    ;; Make sure we have launch4j installed
-    (if-let [launch4j-home (init-launch4j)]
-      (let [target  (io/file (:target-path project))
-            jarfile ""
-            xmlfile (io/file target "config.xml")
-            outfile (io/file target
-                             (or (:exe-name project)
-                                 (str (:name project)
-                                      "-"
-                                      (:version project) ".exe")))
-            options (merge {:jar     jarfile
-                            :outfile outfile}
-                           (:launch4j project))]
-        (with-open [xmlout (io/writer xmlfile)]
-          (xml/emit-config options xmlout))
-        (read-config
-         (validate-filename xmlfile))
-        (build-project
-         (validate-filename launch4j-home))))))
+  (cond (:main project)
+        ;; Make sure we have launch4j installed
+        (if-let [launch4j-home (init-launch4j)]
+          (let [target  (io/file (:target-path project))
+                jarfile ""
+                xmlfile (io/file target "config.xml")
+                outfile (io/file target
+                                 (or (:exe-name project)
+                                     (str (:name project)
+                                          "-"
+                                          (:version project) ".exe")))
+                options (merge {:jar     jarfile
+                                :outfile outfile}
+                               (:launch4j project))]
+            (with-open [xmlout (io/writer xmlfile)]
+              (xml/emit-config options xmlout))
+            (validate-filename jarfile)
+            (read-config
+             (validate-filename xmlfile))
+            (build-project
+             (validate-filename launch4j-home))))
+        :else (main/warn "Could not run launch4j, you must have a :main"
+                         "namespace specified.")))
