@@ -160,15 +160,23 @@
                            [key {} (str value)]))
        (seq options)))
 
-(defn emit-sexp-with-basic-form-str [sexp]
-  (xml/emit-str
-   (xml/sexp-as-element
-    (vec
-     (concat basic-form
-             sexp)))))
+(defn sexp-with-basic-form [sexp]
+  (xml/sexp-as-element
+   (vec
+    (concat basic-form
+            sexp))))
 
-(defn emit-empty-config-str []
-  (emit-sexp-with-basic-form-str top-level-elements))
+(defn emit-sexp-with-basic-form-str [sexp]
+  (xml/emit-str (sexp-with-basic-form sexp)))
+
+(defn emit-sexp-with-basic-form [sexp writer]
+  (xml/emit (sexp-with-basic-form sexp) writer))
+
+
+;; Actual user level functions
 
 (defn emit-config-str [options]
   (emit-sexp-with-basic-form-str (map->xml-sexp options)))
+
+(defn emit-config [options writer]
+  (emit-sexp-with-basic-form (map->xml-sexp options) writer))
