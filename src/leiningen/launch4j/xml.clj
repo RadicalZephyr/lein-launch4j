@@ -123,7 +123,7 @@
    :stayAlive       false
 
    :headerType  "gui"
-   :icon        "icon.ico"
+   :icon        ""
    :priority    "normal"
    :downloadUrl "http://java.com/download"
 
