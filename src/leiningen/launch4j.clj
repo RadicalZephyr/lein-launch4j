@@ -3,7 +3,8 @@
             [leiningen.launch4j.xml :as xml]
             [clojure.java.io :as io]
             [leiningen.core.main :as main]
-            [leiningen.core.user :as user])
+            [leiningen.core.user :as user]
+            [leiningen.uberjar   :as uberjar])
   (:import net.sf.launch4j.Log
            net.sf.launch4j.Builder
            net.sf.launch4j.config.ConfigPersister))
@@ -64,7 +65,7 @@
         ;; Make sure we have launch4j installed
         (if-let [launch4j-home (init-launch4j)]
           (let [target  (io/file (:target-path project))
-                jarfile ""
+                jarfile (uberjar/uberjar project)
                 xmlfile (io/file target "config.xml")
                 outfile (io/file target
                                  (or (:exe-name project)
