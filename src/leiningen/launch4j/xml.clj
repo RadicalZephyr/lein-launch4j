@@ -176,7 +176,12 @@
 ;; Actual user level functions
 
 (defn emit-config-str [options]
-  (emit-sexp-with-basic-form-str (map->xml-sexp options)))
+  (emit-sexp-with-basic-form-str (map->xml-sexp
+                                  (rec-merge default-options
+                                             options))))
 
 (defn emit-config [options writer]
-  (emit-sexp-with-basic-form (map->xml-sexp options) writer))
+  (emit-sexp-with-basic-form (map->xml-sexp
+                              (rec-merge default-options
+                                         options))
+                             writer))
